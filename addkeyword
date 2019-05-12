@@ -1,0 +1,10 @@
+read -p "Enter first image: " first
+read -p "Enter last image: "  last 
+read -p "Enter keyword: " keyword
+ls *|sed -ne "/$first/,/$last/p"
+exit
+grep -s ^$keyword$ /usr/local/etc/keywords ||{
+	echo "keyword \"$keyword\" is not available" >&2
+	exit 1
+}
+exiftool -IPTC:keywords+="$keyword"
